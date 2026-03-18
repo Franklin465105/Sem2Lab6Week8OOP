@@ -42,5 +42,14 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.getAllBookingsByDate(date));
         }
 
+    @GetMapping("/student/{email}")
+    public ResponseEntity<List<Booking>> getByStudentEmail(@PathVariable String email) {
+        return ResponseEntity.ok(bookingService.getBookingsByStudentEmail(email));
+    }
+
+    @GetMapping("/student/{email}/date/{date}")
+    public ResponseEntity<List<Booking>> getByStudentEmailAndDate(@PathVariable String email, @PathVariable LocalDate date) {
+        return ResponseEntity.ok(bookingService.getBookingsByStudentEmailAndDate(email, date));
+    }
 
 }

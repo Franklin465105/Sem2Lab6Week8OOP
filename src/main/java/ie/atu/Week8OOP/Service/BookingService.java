@@ -58,8 +58,13 @@ public class BookingService {
         return bookingRepository.findByBookingDate(bookingDate);
     }
 
-    // Get by BookingIdAndBookingDate
-    public List<Booking> getAllBookingsByBookingIdAndBookingDate(String bookingId, LocalDate bookingDate) {
-        return bookingRepository.findByBookingIdAndBookingDate(bookingId, bookingDate);
+    // Get by student email
+    public List<Booking> getBookingsByStudentEmail(String studentEmail) {
+        return bookingRepository.findByStudentEmail(studentEmail);
+    }
+
+    // Get by student email and date
+    public List<Booking> getBookingsByStudentEmailAndDate(String studentEmail, LocalDate bookingDate) {
+        return bookingRepository.findByStudentEmailAndBookingDate(studentEmail, bookingDate);
     }
 }
