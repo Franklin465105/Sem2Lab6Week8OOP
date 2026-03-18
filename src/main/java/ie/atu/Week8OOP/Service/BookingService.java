@@ -1,23 +1,25 @@
 package ie.atu.Week8OOP.Service;
 
 import ie.atu.Week8OOP.Model.Booking;
+import ie.atu.Week8OOP.Repository.BookingRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class BookingService {
 
-    private final List<Booking> bookingList = new ArrayList<>();
-    private final AtomicLong idCounter = new AtomicLong();
+    private final BookingRepository bookingRepository;
+
+    public BookingService(BookingRepository bookingRepository) {
+        this.bookingRepository = bookingRepository;
+    }
 
     public Booking addBooking(Booking booking) {
 
-        for (Booking existing : bookingList) {
+        List<Booking> bookingList = bookingRepository.findAll();
 
-            // ONLY check conflict if SAME room AND SAME date
+        for (Booking existing : bookingList) {
             if (existing.getRoomNumber().equalsIgnoreCase(booking.getRoomNumber())
                     && existing.getBookingDate().equals(booking.getBookingDate())) {
 
@@ -27,7 +29,6 @@ public class BookingService {
                 int newStart = booking.getStartHour();
                 int newEnd = newStart + booking.getDurationHours();
 
-                // Check if times overlap
                 if (newStart < existingEnd && existingStart < newEnd) {
                     throw new IllegalArgumentException(
                             "Room " + booking.getRoomNumber() +
@@ -38,19 +39,15 @@ public class BookingService {
             }
         }
 
-        booking.setBookingId(idCounter.incrementAndGet());
-        bookingList.add(booking);
-        return booking;
+        return bookingRepository.save(booking);
     }
 
     public List<Booking> getAllBookings() {
-        return bookingList;
+        return bookingRepository.findAll();
     }
 
     public Booking getBookingById(Long id) {
-        return bookingList.stream()
-                .filter(b -> b.getBookingId().equals(id))
-                .findFirst()
+        return bookingRepository.findById(id)
                 .orElseThrow(() ->
                         new IllegalArgumentException("Booking with id " + id + " not found"));
     }

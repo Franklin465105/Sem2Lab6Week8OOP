@@ -1,6 +1,8 @@
 package ie.atu.Week8OOP.Model;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,8 +10,11 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@Entity
 public class Booking {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookingId;
 
     @NotBlank(message = "Room number is required")
@@ -20,6 +25,7 @@ public class Booking {
     private String studentEmail;
 
     @NotNull(message = "Booking date is required")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate bookingDate;
 
     @Min(value = 8, message = "Start hour must be between 8 and 18")

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/bookings")
+@RequestMapping("/reservations")
 public class BookingController {
 
     private final BookingService bookingService;
@@ -19,13 +19,13 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    @PostMapping("/addBooking")
+    @PostMapping
     public ResponseEntity<Booking> addBooking(@Valid @RequestBody Booking booking) {
         Booking saved = bookingService.addBooking(booking);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
-    @GetMapping("/allBookings")
+    @GetMapping
     public ResponseEntity<List<Booking>> getBookings() {
         return ResponseEntity.ok(bookingService.getAllBookings());
     }
