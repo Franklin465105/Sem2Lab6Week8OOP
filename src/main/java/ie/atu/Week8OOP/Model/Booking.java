@@ -3,13 +3,14 @@ package ie.atu.Week8OOP.Model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Booking {
 

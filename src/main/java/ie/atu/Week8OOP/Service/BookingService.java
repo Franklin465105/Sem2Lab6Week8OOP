@@ -4,6 +4,7 @@ import ie.atu.Week8OOP.Model.Booking;
 import ie.atu.Week8OOP.Repository.BookingRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -50,5 +51,15 @@ public class BookingService {
         return bookingRepository.findById(id)
                 .orElseThrow(() ->
                         new IllegalArgumentException("Booking with id " + id + " not found"));
+    }
+
+    // Get by date
+    public List<Booking> getAllBookingsByDate(LocalDate bookingDate) {
+        return bookingRepository.findByBookingDate(bookingDate);
+    }
+
+    // Get by BookingIdAndBookingDate
+    public List<Booking> getAllBookingsByBookingIdAndBookingDate(String bookingId, LocalDate bookingDate) {
+        return bookingRepository.findByBookingIdAndBookingDate(bookingId, bookingDate);
     }
 }

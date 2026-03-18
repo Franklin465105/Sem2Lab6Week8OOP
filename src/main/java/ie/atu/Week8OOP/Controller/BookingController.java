@@ -3,10 +3,12 @@ package ie.atu.Week8OOP.Controller;
 import ie.atu.Week8OOP.Model.Booking;
 import ie.atu.Week8OOP.Service.BookingService;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -34,4 +36,11 @@ public class BookingController {
     public ResponseEntity<Booking> getBookingById(@PathVariable Long id) {
         return ResponseEntity.ok(bookingService.getBookingById(id));
     }
+
+    @GetMapping("/date/{date}")
+    public ResponseEntity<List<Booking>> getByDate(@PathVariable LocalDate date) {
+        return ResponseEntity.ok(bookingService.getAllBookingsByDate(date));
+        }
+
+
 }
